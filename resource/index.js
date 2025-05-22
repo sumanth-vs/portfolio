@@ -38,6 +38,8 @@ let msnry = new Masonry(".grid", {
   horizontalOrder: true,
   columnWidth: 350,
   fitWidth: true,
+  transitionDuration: '0.4s',
+  stagger: 30 // 30ms
 });
 
 // Force masonry reload once page is ready to prevent overlap

@@ -17,6 +17,7 @@
 
   --card-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.06);
   --card-shadow-lower: 0 15px 20px 0 rgba(0, 0, 0, 0.06);
+  --card-shadow-hover: 0 8px 28px 0 rgba(0, 0, 0, 0.09);
 
   --icon-star-color: #f7bd00;
   --icon-fork-color: #f80074;
@@ -34,6 +35,7 @@
 
   --card-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3);
   --card-shadow-lower: 0 15px 20px 0 rgba(0, 0, 0, 0.3);
+  --card-shadow-hover: 0 8px 28px 0 rgba(0, 0, 0, 0.4);
 
   --icon-star-color: #ffd932;
   --icon-fork-color: #ff3794;
@@ -54,7 +56,7 @@
 
 html {
   background: var(--background);
-
+  transition: background-color 0.3s ease;
   scroll-behavior: smooth;
 }
 
@@ -176,12 +178,18 @@ a {
 */
 #name-block {
   grid-area: name-block;
+  animation-name: fadeIn;
+  animation-duration: 0.7s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-delay: 0.2s; /* Slight delay */
 
   font-style: normal;
   font-weight: 500;
   font-size: 36px;
   line-height: 54px;
   color: var(--text-primary);
+  transition: color 0.3s ease;
 
   text-align: center;
   margin: 10px auto;
@@ -209,10 +217,18 @@ a {
   align-items: center;
 
   color: var(--text-primary);
+  transition: color 0.3s ease, background-color 0.3s ease; /* Added background-color just in case, though not directly set */
 }
 
 #nav-block span {
   margin: auto 20px;
+  display: inline-block; /* Allow transform */
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+#nav-block span:hover {
+  transform: translateY(-2px);
+  color: var(--background-secondary); /* This will make it same color as selected */
 }
 
 .nav-selected {
@@ -273,6 +289,11 @@ a {
 
 #pf-info-container {
   grid-area: profile-info;
+  animation-name: fadeIn;
+  animation-duration: 0.7s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-delay: 0.4s; /* Delay after name-block */
 
   display: flex;
   flex-flow: row wrap;
@@ -285,6 +306,7 @@ a {
   font-size: 14px;
   line-height: 21px;
   color: var(--text-primary);
+  transition: color 0.3s ease, background-color 0.3s ease;
 
   opacity: 96%;
 }
@@ -328,6 +350,7 @@ a {
 
 #readme {
  color: var(--text-primary);
+ transition: color 0.3s ease, background-color 0.3s ease;
  margin: 0px auto 60px auto;
  max-width: 1000px;
  padding: 10px 20px 20px 20px;
@@ -337,6 +360,12 @@ a {
   /* horizontal gap between repo cards  */
   margin-bottom: 60px;
   margin-top: 10px;
+  animation-name: slideInUp;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  /* Individual delays can be added in JS if needed, or by staggering classes */
+  transition: top 0.4s ease, left 0.4s ease, opacity 0.4s ease;
 }
 
 .repo-lang {
@@ -385,6 +414,7 @@ a {
   line-height: 36px;
 
   color: var(--text-primary);
+  transition: color 0.3s ease, background-color 0.3s ease;
 
   display: flex;
   justify-content: center;
@@ -399,6 +429,7 @@ a {
   line-height: 24px;
 
   color: var(--text-primary);
+  transition: color 0.3s ease, background-color 0.3s ease;
   word-break: break-word;
 }
 
@@ -407,6 +438,7 @@ a {
   border-radius: 16px;
   background: var(--image-fallback-color);
   margin: 5px auto;
+  transition: background-color 0.3s ease;
 }
 
 .repo-stats {
@@ -467,6 +499,7 @@ a {
 .icon-moon {
   height: 24px;
   width: 24px;
+  transition: fill 0.3s ease;
 }
 
 .icon-sun {
@@ -481,6 +514,7 @@ a {
 .icon-fork {
   height: 22px;
   width: 22px;
+  transition: fill 0.3s ease, stroke 0.3s ease;
 }
 
 .icon-star {
@@ -501,6 +535,7 @@ a {
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
+  transition: stroke 0.3s ease;
 }
 
 .repo-title .icon-fork {
@@ -525,6 +560,40 @@ a {
   Animations :D 
 
 */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation-name: fadeIn;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards; /* Keep the state of the last keyframe */
+}
+
+.animate-slideInUp {
+  animation-name: slideInUp;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards; /* Keep the state of the last keyframe */
+}
 
 /* profile image animations */
 
@@ -561,6 +630,7 @@ a {
 
 .grid-item:hover > .repo-about {
   transform: scale(1.03);
+  box-shadow: var(--card-shadow-hover);
 }
 
 .grid-item:hover > .repo-stats {
